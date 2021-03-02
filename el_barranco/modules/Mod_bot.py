@@ -2,6 +2,7 @@ import pygame
 
 
 class Cursor(pygame.Rect):
+   
     def __init__(self):
         pygame.Rect.__init__(self, 0, 0, 1, 1)
 
@@ -10,7 +11,9 @@ class Cursor(pygame.Rect):
 
 
 class Boton(pygame.sprite.Sprite):
+
     def __init__(self, imagen1, imagen2, x, y):
+        
         pygame.sprite.Sprite.__init__(self)
         self.imagen_normal = imagen1
         self.imagen_seleccion = imagen2
@@ -21,6 +24,7 @@ class Boton(pygame.sprite.Sprite):
         self.sonido.set_volume(0.1)
 
     def update(self, pantalla, cursor):
+       
         num = 0
         if cursor.colliderect(self.rect):
             self.imagen_actual = self.imagen_seleccion
@@ -33,7 +37,9 @@ class Boton(pygame.sprite.Sprite):
 
 
 class BotonNumero(pygame.sprite.Sprite):
+    
     def __init__(self, imagen1, imagen2, x, y, numero, pantalla):
+    
         pygame.sprite.Sprite.__init__(self)
         self.imagen_normal = imagen1
         self.imagen_seleccion = imagen2
@@ -51,6 +57,7 @@ class BotonNumero(pygame.sprite.Sprite):
         self.sonido.set_volume(0.1)
 
     def update_numero(self, pantalla, cursor):
+    
         if cursor.colliderect(self.rect):
             self.imagen_actual = self.imagen_seleccion
             self.sonido.play(0, 0, 1)
@@ -60,7 +67,9 @@ class BotonNumero(pygame.sprite.Sprite):
 
 
 class BotonSonido(pygame.sprite.Sprite):
+    
     def __init__(self, x, y, pantalla):
+    
         pygame.sprite.Sprite.__init__(self)
         self.imagenON = pygame.image.load("data/sonido.png")
         self.imagenOFF = pygame.image.load("data/sonido1.png")
@@ -73,6 +82,7 @@ class BotonSonido(pygame.sprite.Sprite):
         return True if self.imag_act == self.imagenON else False
 
     def swich(self, sonidos, pantalla):
+    
         if self.imag_act == self.imagenON:
             self.imag_act = self.imagenOFF
             sonidos[1].set_volume(0.0)
@@ -85,7 +95,9 @@ class BotonSonido(pygame.sprite.Sprite):
 
 
 class BotonOK (pygame.sprite.Sprite):
+    
     def __init__(self, cuadro, x, y, pantalla, fondo):
+    
         pygame.sprite.Sprite.__init__(self)
         self.imagen = cuadro
         self.imagenOk = pygame.image.load("data/ok.png")
@@ -96,6 +108,7 @@ class BotonOK (pygame.sprite.Sprite):
         pantalla.blit(fondo, (0, 0))
 
     def swich(self, pantalla, fondo):
+    
         if self.estado is False:
             self.estado = True
             fondo.blit(self.imagenOk, self.rect)
