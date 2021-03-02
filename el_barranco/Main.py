@@ -1,49 +1,59 @@
 import pygame
 import pickle
-import os
-import sys
+import os, sys
 import time
-import Mod_ran
-import Mod_ayuda
-import Mod_fun
-import Mod_bot
-import Mod_teclado
+import Mod_ran as ran, Mod_ayuda as ayu, Mod_fun as fun, Mod_bot as bot, Mod_teclado as tec
 from pygame.locals import *
 
 
-def main():
+pantalla_ancho = 730
+pantalla_alto = 500
+sonidos = []
+ancho_x = 270
+alto_y = 250
+dist = 40
 
-    # beginning to load sounds
-    sonidos = []
-    sonidos.append(pygame.mixer.Sound('menu.wav'))
-    sonidos.append(pygame.mixer.Sound('juego.wav'))
-    pantalla = pygame.display.set_mode((730, 500))
-    # ending to load sounds.
-    fondo = pygame.image.load("fondo.png")
+# Posicion Botones del Menu
+nuevo_y = alto_y
+ranking_y = alto_y + dist
+ayuda_y = alto_y + (dist*2)
+salir_y = alto_y + (dist*3)
+
+def cargar_botones():
+    """Inicializacion Botones del Menu"""
+    juego, juego1 = pygame.image.load("data/nuevojuego.png"), pygame.image.load("data/nuevojuego1.png")
+    boton_1 = bot.Boton(juego, juego1, ancho_x, nuevo_y)
+    ranking, ranking1 = pygame.image.load("data/ranking.png"), pygame.image.load("data/ranking1.png")
+    boton_2 = bot.Boton(ranking, ranking1, ancho_x, ranking_y)
+    opciones, opciones1 = pygame.image.load("data/ayuda1.png"), pygame.image.load("data/ayuda.png")
+    boton_3 = bot.Boton(opciones, opciones1, ancho_x, ayuda_y)
+    salir, salir1 = pygame.image.load("data/salir.png"), pygame.image.load("data/salir1.png")
+    boton_4 = bot.Boton(salir, salir1, ancho_x, salir_y)
+    return boton_1, boton_2, boton_3, boton_4
+
+def cargar_sonidos():
+    sonidos.append(pygame.mixer.Sound('data/menu.wav'))
+    sonidos.append(pygame.mixer.Sound('data/juego.wav'))
+    sonidos.append(1) # Muted
+
+def cambiar_sonidos(i, j):
+    """Detiene sonido i, hace sonar sonido j"""
+    sonidos[i].stop()
+    sonidos[j].play(loops=-1)
+
+def main():
+    cargar_sonidos()
+    pantalla = pygame.display.set_mode((pantalla_ancho, pantalla_alto))
+    fondo = pygame.image.load("data/fondo.png")
     pygame.display.set_caption("MENU - EL BARRANCO")
-    rank = Mod_ran.Ranking()
-    cursor = Mod_bot.Cursor()
-    # 3 variables to positioning
-    x = 270
-    y = 250
-    dist = 40
-    # beginning to load images
-    juego = pygame.image.load("nuevojuego.png")
-    juego1 = pygame.image.load("nuevojuego1.png")
-    boton1 = Mod_bot.Boton(juego, juego1, x, y)
-    ranking = pygame.image.load("ranking.png")
-    ranking1 = pygame.image.load("ranking1.png")
-    boton2 = Mod_bot.Boton(ranking, ranking1, x, y=y+dist)
-    opciones = pygame.image.load("ayuda1.png")
-    opciones1 = pygame.image.load("ayuda.png")
-    boton3 = Mod_bot.Boton(opciones, opciones1, x, y=y+dist+dist)
-    salir = pygame.image.load("salir.png")
-    salir1 = pygame.image.load("salir1.png")
-    boton4 = Mod_bot.Boton(salir, salir1, x, y=y+dist+dist+dist)
-    # ending to load images.
-    salir = False  # Boolean, end program.
-    sonidos[0].play(loops=-1)  # SONIDO MENU REPITIENDOSE
-    while (salir is False):
+    rank = ran.Ranking()
+    cursor = bot.Cursor()
+
+    boton_1, boton_2, boton_3, boton_4 = cargar_botones()
+    salir = False
+    sonidos[0].play(loops=-1)  # PLAY SONIDO MENU
+
+    while (not salir):
         borrar = False
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -54,43 +64,37 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 botones_mouse = pygame.mouse.get_pressed()
                 if botones_mouse[0] == 1:
-                    if cursor.colliderect(boton1.rect):
-                        sonidos[0].stop()  # STOP SONIDO MENU
-                        sonidos[1].play(loops=-1)  # SONIDO JUEGO REPETIENDOSE
-                        while (borrar is False):
-                            tuplaPj = Mod_teclado.ingresenombre(cursor,
-                                                                pantalla)
-                            if tuplaPj[0] == 'borrar':
-                                borrar = False
-                            else:
-                                borrar = True  # no aprete Borrar (medio raro)
+                    if cursor.colliderect(boton_1.rect):
+                        cambiar_sonidos(0, 1)
+                        while (not borrar):
+                            tuplaPj = tec.ingresenombre(cursor, pantalla)
+                            borrar = False if tuplaPj[0] == 'borrar' else True
                         if tuplaPj[0] == 'exit':
-                            sonidos[1].stop()
-                            sonidos[0].play(loops=-1)
+                            cambiar_sonidos(1,0)
                             break
-                        Mod_fun.nuevojuego(pantalla, tuplaPj[0], tuplaPj[1])
-                        sonidos[1].stop()
-                        sonidos[0].play(loops=-1)
+                        fun.nuevo_juego(pantalla, sonidos, tuplaPj[0], tuplaPj[1])
+                        cambiar_sonidos(1,0)
                         rank.get_ranking(sonidos, pantalla)
-                    if cursor.colliderect(boton2.rect):
+                    if cursor.colliderect(boton_2.rect):
                         rank.get_ranking(sonidos, pantalla)
-                    if cursor.colliderect(boton3.rect):
+                    if cursor.colliderect(boton_3.rect):
                         sonidos[0].stop()
-                        Mod_ayuda.ayuda(pantalla)
+                        ayu.ayuda(pantalla)
                         sonidos[1].play(loops=-1)
-                    if cursor.colliderect(boton4.rect):
+                    if cursor.colliderect(boton_4.rect):
                         salir = True
                         pygame.quit()
                         sys.exit()
         pantalla.blit(fondo, (0, 0))
         cursor.update()
-        boton1.update(pantalla, cursor)
-        boton2.update(pantalla, cursor)
-        boton3.update(pantalla, cursor)
-        boton4.update(pantalla, cursor)
+        boton_1.update(pantalla, cursor)
+        boton_2.update(pantalla, cursor)
+        boton_3.update(pantalla, cursor)
+        boton_4.update(pantalla, cursor)
         pygame.display.flip()
     sonidos[0].stop()
     pygame.quit()
+
 
 if __name__ == '__main__':
     pygame.init()

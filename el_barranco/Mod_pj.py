@@ -1,21 +1,20 @@
 import pygame
 import time
-import Mod_fun
+import sys
+sys.path.append("./modules/")
+import Mod_fun as fun
 
 
 class Personaje(pygame.sprite.Sprite):
-
     def __init__(self, genero, fondo):
-
         pygame.sprite.Sprite.__init__(self)
-        self.listaImg = self.cargarImg(genero)
+        self.listaImg = self.obtener_imagenes(genero)
         self.fondo = pygame.image.load(fondo)
         self.rect = self.listaImg[0].get_rect()
         self.rect.top = 110
         self.rect.left = 0
 
     def Caminar(self, vel, pantalla):
-
         num = 0
         num2 = 0
         for i in range(0, 140):
@@ -23,14 +22,12 @@ class Personaje(pygame.sprite.Sprite):
             pantalla.blit(self.fondo, (0, 0))
             pantalla.blit(self.listaImg[num], self.rect)
             if num2 == 5:
-                num = Mod_fun.contador(num)
-            num2 = Mod_fun.contador(num2)
+                num = fun.contador(num)
+            num2 = fun.contador(num2)
             pygame.display.update()
 
     def Golpe(self, pantalla):
-
-        img1 = pygame.image.load('golpe2.png')
-        img2 = pygame.image.load('golpe1.png')
+        img1, img2 = pygame.image.load('data/golpe2.png'), pygame.image.load('data/golpe1.png')
         for i in range(0, 5):
             if i == 1:
                 pantalla.blit(img1, (270, 423))
@@ -40,7 +37,6 @@ class Personaje(pygame.sprite.Sprite):
         pygame.time.delay(200)
 
     def Caer(self, pantalla):
-
         for i in range(1, 7):
             self.rect.top -= i
             self.rect.left += i
@@ -61,7 +57,6 @@ class Personaje(pygame.sprite.Sprite):
         self.Golpe(pantalla)
 
     def Saltar(self, pantalla):
-
         for i in range(1, 15):
             self.rect.top -= i
             self.rect.left += i
@@ -76,21 +71,20 @@ class Personaje(pygame.sprite.Sprite):
             pygame.display.update()
         self.Caminar(4, pantalla)
 
-    def cargarImg(self, gen):
-
+    def obtener_imagenes(self, gen):
         if gen == 'varon':
-            img1 = pygame.image.load("pj1.png")
-            img2 = pygame.image.load("pj2.png")
-            img3 = pygame.image.load("pj3.png")
-            img4 = pygame.image.load("pj4.png")
-            img5 = pygame.image.load("pj5.png")
-            img6 = pygame.image.load("pj6.png")
-        elif gen == 'nena':
-            img1 = pygame.image.load("pjm1.png")
-            img2 = pygame.image.load("pjm2.png")
-            img3 = pygame.image.load("pjm3.png")
-            img4 = pygame.image.load("pjm4.png")
-            img5 = pygame.image.load("pjm5.png")
-            img6 = pygame.image.load("pjm6.png")
+            img1 = pygame.image.load("data/pj1.png")
+            img2 = pygame.image.load("data/pj2.png")
+            img3 = pygame.image.load("data/pj3.png")
+            img4 = pygame.image.load("data/pj4.png")
+            img5 = pygame.image.load("data/pj5.png")
+            img6 = pygame.image.load("data/pj6.png")
+        else:
+            img1 = pygame.image.load("data/pjm1.png")
+            img2 = pygame.image.load("data/pjm2.png")
+            img3 = pygame.image.load("data/pjm3.png")
+            img4 = pygame.image.load("data/pjm4.png")
+            img5 = pygame.image.load("data/pjm5.png")
+            img6 = pygame.image.load("data/pjm6.png")
         lista = [img1, img2, img3, img4, img5, img6]
         return lista

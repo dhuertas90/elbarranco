@@ -1,45 +1,35 @@
 import pygame
-import sys
-import time
+import sys, time
 from pygame.locals import *
-import Mod_bot
+sys.path.append("./modules/")
+import Mod_bot as bot
 
 
 def mostrar(pantalla, fondo, key, pos, pos2=220, tam=50, c=(255, 255, 255)):
-
-    fuente = pygame.font.Font("dejavu.ttf", tam)
+    fuente = pygame.font.Font("data/dejavu.ttf", tam)
     letra = fuente.render(key, 1, c)
     fondo.blit(letra, (pos, pos2))
     pantalla.blit(fondo, (0, 0))
     pygame.display.flip()
 
-
 def ingresenombre(cursor, pantalla):
-
+    # Pantalla antesala a comenzar a jugar
     pygame.display.set_caption('EL BARRANCO')
-    fondo = pygame.image.load("fondoNombre.png")
-    enter = pygame.image.load("jugar.png")
-    enter2 = pygame.image.load("jugar1.png")
-    botonE = Mod_bot.Boton(enter, enter2, 250, 300)
-    borrar = pygame.image.load("borrar.png")
-    borrar2 = pygame.image.load("borrar1.png")
-    botonB = Mod_bot.Boton(borrar, borrar2, 100, 300)
-    var = pygame.image.load("cuadrado1.png")
-    bot_var = Mod_bot.BotonOK(var, 500, 200, pantalla, fondo)
-    nen = pygame.image.load("cuadrado.png")
-    bot_nen = Mod_bot.BotonOK(nen, 500, 350, pantalla, fondo)
-    atras = pygame.image.load("flecha.png")
-    atras1 = pygame.image.load("flecha1.png")
-    boton = Mod_bot.Boton(atras1, atras, 10, 440)
-    imgvaron = pygame.image.load("varon.png")
-    fondo.blit(imgvaron, (550, 150))
-    imgnena = pygame.image.load("nena.png")
-    fondo.blit(imgnena, (550, 300))
-    ok = False
-    apodo = ''
-    maximo = 8
-    cant = 0
-    pos = 27
+    fondo = pygame.image.load("data/fondoNombre.png")
+    enter, enter2 = pygame.image.load("data/jugar.png"), pygame.image.load("data/jugar1.png")
+    b_enter = bot.Boton(enter, enter2, 250, 300)
+    borrar, borrar2 = pygame.image.load("data/borrar.png"), pygame.image.load("data/borrar1.png")
+    b_borrar = bot.Boton(borrar, borrar2, 20, 300)
+    var, nen = pygame.image.load("data/cuadrado1.png"), pygame.image.load("data/cuadrado.png")
+    b_varon = bot.BotonOK(var, 550, 150, pantalla, fondo)
+    b_nena = bot.BotonOK(nen, 550, 310, pantalla, fondo)
+    atras, atras1 = pygame.image.load("data/flecha.png"), pygame.image.load("data/flecha1.png")
+    boton = bot.Boton(atras1, atras, 10, 440)
+    imgvaron, imgnena = pygame.image.load("data/varon.png"), pygame.image.load("data/nena.png")
+    fondo.blit(imgvaron, (630, 100))
+    fondo.blit(imgnena, (630, 300))
+    ok, apodo, maximo, cant, pos = False, '', 8, 0, 165
+    var_selected = nen_selected = 0
     salir = True
     while (salir is True):
         events = pygame.event.get()
@@ -187,31 +177,38 @@ def ingresenombre(cursor, pantalla):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 botones_mouse = pygame.mouse.get_pressed()
                 if botones_mouse[0] == 1:
-                    if cursor.colliderect(bot_var.rect):
-                        bot_var.swich(pantalla, fondo)
+                    if cursor.colliderect(b_varon.rect):
+                        b_varon.swich(pantalla, fondo)
                         genero = 'varon'
-                        bot_nen = Mod_bot.BotonOK(nen, 500, 350,
-                                                  pantalla, fondo)
-                        ok = True
-                    elif cursor.colliderect(bot_nen.rect):
-                        bot_nen.swich(pantalla, fondo)
+                        b_nena = bot.BotonOK(var, 550, 310, pantalla, fondo)
+                        var_selected += 1
+                        if var_selected > 1:
+                            ok = False
+                            var_selected = 0
+                        else:
+                            ok = True
+                    elif cursor.colliderect(b_nena.rect):
+                        b_nena.swich(pantalla, fondo)
                         genero = 'nena'
-                        bot_var = Mod_bot.BotonOK(var, 500, 200,
-                                                  pantalla, fondo)
-                        ok = True
-                    elif cursor.colliderect(botonB.rect):
+                        b_varon = bot.BotonOK(var, 550, 150, pantalla, fondo)
+                        nen_selected += 1
+                        if nen_selected > 1:
+                            ok = False
+                            nen_selected = 0
+                        else:
+                            ok = True
+                    elif cursor.colliderect(b_borrar.rect):
                         return ('borrar', 'borrar')
                         salir = True
                         break
-                    elif cursor.colliderect(botonE.rect):
+                    elif cursor.colliderect(b_enter.rect):
                         if ok and (apodo != ''):
                             return (apodo, genero)
                             salir = True
                             break
                         else:
                             msj = "INGRESE NOMBRE Y SELECCIONE PERSONAJE!"
-                            mostrar(pantalla, fondo, msj, 10, pos2=10,
-                                    tam=30, c=(0, 0, 0))
+                            mostrar(pantalla, fondo, msj, 10, pos2=10, tam=30, c=(0, 0, 0))
                             pygame.time.delay(500)
                     elif cursor.colliderect(boton.rect):
                         return ('exit', 'exit')
@@ -221,7 +218,7 @@ def ingresenombre(cursor, pantalla):
                         pass
         pantalla.blit(fondo, (0, 0))
         cursor.update()
-        botonB.update(pantalla, cursor)
-        botonE.update(pantalla, cursor)
+        b_borrar.update(pantalla, cursor)
+        b_enter.update(pantalla, cursor)
         boton.update(pantalla, cursor)
         pygame.display.flip()
