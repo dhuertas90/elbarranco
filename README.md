@@ -3,4 +3,5 @@ Proyect "El Barranco" - Game.
 
 Development of a game in Python.
 The Pygame package is used.
-* .Png images not available.
+Subfolders: modules/ data/
+* .Png images, sounds and font are available in data/
