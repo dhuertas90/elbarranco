@@ -9,7 +9,7 @@ class Personaje(pygame.sprite.Sprite):
     def __init__(self, genero, fondo):
         pygame.sprite.Sprite.__init__(self)
         self.listaImg = self.obtener_imagenes(genero)
-        self.fondo = pygame.image.load(fondo)
+        self.fondo = fondo
         self.rect = self.listaImg[0].get_rect()
         self.rect.top = 110
         self.rect.left = 0

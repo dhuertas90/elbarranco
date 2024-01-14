@@ -1,12 +1,18 @@
 import pygame
-import sys, time
+import sys
 from pygame.locals import *
 sys.path.append("./modules/")
 import Mod_bot as bot
 
 
+letras_permitidas = {
+    K_a: 'a', K_b: 'b', K_c: 'c', K_d: 'd', K_e: 'e', K_f: 'f', K_g: 'g', K_h: 'h', K_i: 'i',
+    K_j: 'j', K_k: 'k', K_l: 'l', K_m: 'm', K_n: 'n', K_o: 'o', K_p: 'p', K_q: 'q', K_r: 'r', K_s: 's',
+    K_t: 't', K_u: 'u', K_v: 'v', K_w: 'w', K_x: 'x', K_y: 'y', K_z: 'z'
+    }
+
 def mostrar(pantalla, fondo, key, pos, pos2=220, tam=50, c=(255, 255, 255)):
-    fuente = pygame.font.Font("data/dejavu.ttf", tam)
+    fuente = pygame.font.Font("data/Cascadia.ttf", tam)
     letra = fuente.render(key, 1, c)
     fondo.blit(letra, (pos, pos2))
     pantalla.blit(fondo, (0, 0))
@@ -29,9 +35,10 @@ def ingresenombre(cursor, pantalla):
     fondo.blit(imgvaron, (630, 100))
     fondo.blit(imgnena, (630, 300))
     ok, apodo, maximo, cant, pos = False, '', 8, 0, 165
-    var_selected = nen_selected = 0
+    varon_selected = nena_selected = 0
     salir = True
-    while (salir is True):
+    datos = ''
+    while salir:
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
@@ -41,133 +48,8 @@ def ingresenombre(cursor, pantalla):
                 sys.exit()
             if event.type == KEYDOWN:
                 if maximo > cant:
-                    if event.key == K_a:
-                        letra = 'a'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_b:
-                        letra = 'b'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_c:
-                        letra = 'c'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_d:
-                        letra = 'd'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 35
-                        cant += 1
-                    elif event.key == K_e:
-                        letra = 'e'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 30
-                        cant += 1
-                    elif event.key == K_f:
-                        letra = 'f'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 30
-                        cant += 1
-                    elif event.key == K_g:
-                        letra = 'g'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_h:
-                        letra = 'h'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_i:
-                        letra = 'i'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 20
-                        cant += 1
-                    elif event.key == K_j:
-                        letra = 'j'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_k:
-                        letra = 'k'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_l:
-                        letra = 'l'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 30
-                        cant += 1
-                    elif event.key == K_m:
-                        letra = 'm'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 45
-                        cant += 1
-                    elif event.key == K_n:
-                        letra = 'n'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 35
-                        cant += 1
-                    elif event.key == K_o:
-                        letra = 'o'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_p:
-                        letra = 'p'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 35
-                        cant += 1
-                    elif event.key == K_q:
-                        letra = 'q'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_r:
-                        letra = 'r'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_s:
-                        letra = 's'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 35
-                        cant += 1
-                    elif event.key == K_t:
-                        letra = 't'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_u:
-                        letra = 'u'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_v:
-                        letra = 'v'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_w:
-                        letra = 'w'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 45
-                        cant += 1
-                    elif event.key == K_x:
-                        letra = 'x'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_y:
-                        letra = 'y'
-                        mostrar(pantalla, fondo, letra, pos)
-                        pos += 40
-                        cant += 1
-                    elif event.key == K_z:
-                        letra = 'z'
+                    if event.key in letras_permitidas:
+                        letra = letras_permitidas[event.key]
                         mostrar(pantalla, fondo, letra, pos)
                         pos += 35
                         cant += 1
@@ -181,39 +63,42 @@ def ingresenombre(cursor, pantalla):
                         b_varon.swich(pantalla, fondo)
                         genero = 'varon'
                         b_nena = bot.BotonOK(var, 550, 310, pantalla, fondo)
-                        var_selected += 1
-                        if var_selected > 1:
+                        varon_selected += 1
+                        if varon_selected > 1:
                             ok = False
-                            var_selected = 0
+                            varon_selected = 0
                         else:
                             ok = True
+                        print(ok, varon_selected)
                     elif cursor.colliderect(b_nena.rect):
                         b_nena.swich(pantalla, fondo)
                         genero = 'nena'
                         b_varon = bot.BotonOK(var, 550, 150, pantalla, fondo)
-                        nen_selected += 1
-                        if nen_selected > 1:
+                        nena_selected += 1
+                        print(f"nena_selected --> {nena_selected}")
+                        if nena_selected > 1:
                             ok = False
-                            nen_selected = 0
+                            nena_selected = 0
                         else:
                             ok = True
                     elif cursor.colliderect(b_borrar.rect):
-                        return ('borrar', 'borrar')
+                        datos = ('borrar', 'borrar') 
                         salir = True
-                        break
+                        return datos
                     elif cursor.colliderect(b_enter.rect):
+                        print(f"OK es --> {ok}")
                         if ok and (apodo != ''):
-                            return (apodo, genero)
+                            datos = (apodo, genero)
                             salir = True
-                            break
+                            return datos
                         else:
                             msj = "INGRESE NOMBRE Y SELECCIONE PERSONAJE!"
                             mostrar(pantalla, fondo, msj, 10, pos2=10, tam=30, c=(0, 0, 0))
                             pygame.time.delay(500)
                     elif cursor.colliderect(boton.rect):
-                        return ('exit', 'exit')
+                        datos = ('exit', 'exit') 
                         salir = True
-                        break
+                        return datos
                     else:
                         pass
         pantalla.blit(fondo, (0, 0))
@@ -222,3 +107,4 @@ def ingresenombre(cursor, pantalla):
         b_enter.update(pantalla, cursor)
         boton.update(pantalla, cursor)
         pygame.display.flip()
+    

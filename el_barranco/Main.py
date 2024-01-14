@@ -2,7 +2,7 @@ import pygame
 import pickle
 import os, sys
 import time
-import Mod_ran as ran, Mod_ayuda as ayu, Mod_fun as fun, Mod_bot as bot, Mod_teclado as tec
+import modules.Mod_ran as ran, modules.Mod_ayuda as ayu, modules.Mod_fun as fun, modules.Mod_bot as bot, modules.Mod_teclado as tec
 from pygame.locals import *
 
 
