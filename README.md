@@ -6,7 +6,8 @@
 
 ![](https://github.com/dhuertas90/elbarranco/blob/main/info/Screenshot.PNG)
 
-Para obtener una demostración visual del juego, puedes ver el video ubicado en este repositorio, accediendo a la siguiente ruta: /info/EL BARRANCO.mp4
+Para obtener una demostración visual del juego, puedes ver el video ubicado en este repositorio, accediendo a la siguiente ruta:
+/info/EL BARRANCO.mp4
 
 
 
