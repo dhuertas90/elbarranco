@@ -2,7 +2,7 @@
 
 ## Juego Educativo
 
-"El Barranco" es un juego educativo diseñado para fortalecer las habilidades matemáticas, centrándose en la práctica de la suma y resta. Este juego está especialmente diseñado para personas en etapas iniciales de su educación.
+"El Barranco" es un juego educativo diseñado para fortalecer las habilidades matemáticas, centrándose en la práctica de la suma y resta. Este juego fué especialmente diseñado para personas en etapas iniciales de su educación.
 
 ![](https://github.com/dhuertas90/elbarranco/blob/main/info/Screenshot.PNG)
 
