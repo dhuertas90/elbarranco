@@ -12,7 +12,6 @@ sonidos = []
 ancho_x = 270
 alto_y = 250
 dist = 40
-long = 90
 
 # Posicion Botones del Menu
 nuevo_y = alto_y
