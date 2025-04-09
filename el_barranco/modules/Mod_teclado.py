@@ -79,7 +79,6 @@ def ingresenombre(cursor, pantalla):
                         if nena_selected > 1:
                             ok = False
                             nena_selected = 0
-                        else:
                             ok = True
                     elif cursor.colliderect(b_borrar.rect):
                         datos = ('borrar', 'borrar') 
